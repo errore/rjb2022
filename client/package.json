@@ -1,6 +1,22 @@
 {
+  "private": true,
+  "scripts": {
+    "tsc": "tsc",
+    "tscw": "tsc --watch",
+    "wp": "webpack",
+    "wpw": "webpack --watch",
+    "serve": "http-server build"
+  },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
-    "@amap/amap-jsapi-types": "^0.0.8"
+    "@amap/amap-jsapi-types": "^0.0.8",
+    "@types/lodash": "^4.14.150",
+    "copy-webpack-plugin": "^11.0.0",
+    "http-server": "^14.1.1",
+    "lodash": "^4.17.15",
+    "ts-loader": "^7.0.0",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   }
 }
