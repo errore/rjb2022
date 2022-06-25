@@ -2,7 +2,7 @@ import { load } from "@amap/amap-jsapi-loader";
 import "@amap/amap-jsapi-types";
 
 
-let tiles_handler = function (this: GlobalEventHandlers, ev: MouseEvent){
+let tiles_handler = function (this: GlobalEventHandlers, ev: MouseEvent) {
     console.log(this);
 }
 
@@ -13,24 +13,24 @@ load({ //首次调用 load
 }).then((AMap) => {
     let map: AMap.Map = new AMap.Map('container');
     let tiles: AMap.TileLayer = new AMap.TileLayer.Flexible({
-                cacheSize: 300,
-                zIndex: 200,
-                createTile: function (x: number, y: number, z: number, success: (arg0: HTMLCanvasElement) => void, fail: any) {
-                    let c = document.createElement('canvas');
-                    c.width = c.height = 256;
-                    
-                    let cxt = c.getContext("2d") as CanvasRenderingContext2D;
-                    cxt.font = "15px Verdana";
-                    cxt.fillStyle = "#ff0000";
-                    cxt.strokeStyle = "#FF0000";
-                    cxt.strokeRect(0, 0, 256, 256);
-                    cxt.fillText('(' + [x, y, z].join(',') + ')', 10, 30);
-                    c.onclick = tiles_handler
-                    
-                    // 通知API切片创建完成
-                    success(c);
-                }
-            });
+        cacheSize: 300,
+        zIndex: 200,
+        createTile: function (x: number, y: number, z: number, success: (arg0: HTMLCanvasElement) => void, fail: any) {
+            let c = document.createElement('canvas');
+            c.width = c.height = 256;
+
+            let cxt = c.getContext("2d") as CanvasRenderingContext2D;
+            cxt.font = "15px Verdana";
+            cxt.fillStyle = "#ff0000";
+            cxt.strokeStyle = "#FF0000";
+            cxt.strokeRect(0, 0, 256, 256);
+            cxt.fillText('(' + [x, y, z].join(',') + ')', 10, 30);
+            c.onclick = tiles_handler
+
+            // 通知API切片创建完成
+            success(c);
+        }
+    });
 
     map.setLayers(
         [
