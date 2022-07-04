@@ -12,7 +12,7 @@ load({ //首次调用 load
         center: [116.397428, 39.90923],
         resizeEnable: true,
         zoom: 14,
-        zooms: [3, 20],
+        zooms: [3, 15],
         expandZoomRange: true
     });
 
@@ -27,7 +27,7 @@ load({ //首次调用 load
             cxt.strokeStyle = "#FF0000";
             cxt.strokeRect(0, 0, 256, 256);
 
-            c.addEventListener("click", () => blockClickHandler(x, y, z, cxt));
+            c.addEventListener("click", () => blockClickHandler(x, y, z, cxt)); 
             // 通知API切片创建完成
             success(c);
         }

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>- POST Test Page -</title>
+        <script>
+            function bit_btn_click(){
+                let t1 = document.getElementById("input1").files[0];
+                let t2 = document.getElementById("input2").files[0];
+                let img = document.getElementById("img");
+                let formData = new FormData();
+                formData.append("t1", t1);
+                formData.append("t2", t2);
+                fetch('/bit/', {method: "POST", body: formData})
+                .then(response => response.blob())
+                .then(blob=>{
+                    const objURL = URL.createObjectURL(blob);
+                    img.src = objURL;
+                });
+            }
+            function road_btn_click(){
+                let t1 = document.getElementById("road_input").files[0];
+                let img = document.getElementById("road_img");
+                let formData = new FormData();
+                formData.append("img", t1);
+
+                fetch('/road/', {method: "POST", body: formData})
+                .then(response => response.blob())
+                .then(blob=>{
+                    const objURL = URL.createObjectURL(blob);
+                    img.src = objURL;
+                });
+            }
+            function class_btn_click(){
+                let t1 = document.getElementById("class_input").files[0];
+                let img = document.getElementById("class_img");
+                let formData = new FormData();
+                formData.append("img", t1);
+
+                fetch('/classify/', {method: "POST", body: formData})
+                .then(response => response.json())
+                .then(data => img.innerText = JSON.stringify(data));
+            }
+            function devide_btn_click(){
+                let t1 = document.getElementById("devide_input").files[0];
+                let img = document.getElementById("devide_img");
+                let formData = new FormData();
+                formData.append("img", t1);
+
+                fetch('/devide/', {method: "POST", body: formData})
+                .then(response => response.blob())
+                .then(blob=>{
+                    const objURL = URL.createObjectURL(blob);
+                    img.src = objURL;
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <ul>
+            <li>
+                <input id="input1" type="file">
+                <input id="input2" type="file">
+                <button onclick="bit_btn_click()">POST</button><br>
+                <img id="img" width="512" height="512">
+            </li>
+            <li>
+                <input id="road_input" type="file">
+                <button onclick="road_btn_click()">POST</button><br>
+                <img id="road_img" width="512" height="512">
+            </li>
+            <li>
+                <input id="class_input" type="file">
+                <button onclick="class_btn_click()">POST</button><br>
+                <div id="class_img" width="512" height="512"></div>
+            </li>
+            <li>
+                <input id="devide_input" type="file">
+                <button onclick="devide_btn_click()">POST</button><br>
+                <img id="devide_img" width="512" height="512">
+            </li>
+        </ul>
+    </body>
+</html>
