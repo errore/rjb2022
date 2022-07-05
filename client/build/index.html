@@ -9,11 +9,55 @@
   </head>
   <body>
     <div id="container" tabindex="0"></div>
-    <div class="input-card" style="width: 120px">
-      <button id="start_edit" class="btn" style="margin-bottom: 5px">开始编辑</button>
-      <button id="end_edit" class="btn" style="margin-bottom: 5px">结束编辑</button>
-      <button id="analysis" class="btn" style="margin-bottom: 5px">分析</button>
-      <img id="test_img" />
+
+    <div class="input-card" style="width: 220px">
+      <div style="margin: auto;font-size: x-large;margin-top: 12px;margin-bottom: 24px;">
+        <div><b style="color: #2196F3">Geo</b>Analysis</div>
+        <div><b>地理数据</b>分析</div>
+      </div>
+      
+      <div class="switch-item" style="margin-bottom: 12px">
+        <div>路网分析</div>
+        <label class="switch">
+          <input type="checkbox" id="road_switch">
+          <div class="slider"></div>
+        </label>
+      </div>
+
+      <div class="slider-item"  style="margin-bottom: 12px">
+        <label>透明度：</label><span id="road_opa_val"> - </span>
+        <input id="road_opacity" type="range" value="0.6" min="0" max="1" step="0.01">
+      </div>
+
+      <div class="switch-item" style="margin-bottom: 12px">
+        <div>图像分割</div>
+        <label class="switch">
+          <input type="checkbox" id="divide_switch">
+          <div class="slider"></div>
+        </label>
+      </div>
+
+      <div class="slider-item"  style="margin-bottom: 12px">
+        <label>透明度：</label><span id="divide_opa_val"> - </span>
+        <input id="divide_opacity" type="range" value="0.6" min="0" max="1" step="0.01">
+      </div>
+
+      <div class="switch-item" style="margin-bottom: 12px">
+        <div>物体识别</div>
+        <label class="switch">
+          <input type="checkbox" id="classify_switch">
+          <div class="slider"></div>
+        </label>
+      </div>
+
+      <button id="bit" class="btn" style="margin-bottom: 12px">时相分析</button>
+    </div>
+
+    <div class="model" id="model">
+      <div class="model-content">
+          <button class="btn exit-btn" id="exit_bit"> 退出 </button>
+
+      </div>
     </div>
     <script src="main-bundle.js"></script>
   </body>

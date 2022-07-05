@@ -1,6 +1,6 @@
-import { blockRequestHandler } from "./handlers";
+import { blockRequestHandler, playgroundRequestHandler } from "./handlers";
 
-export function getNewAnalysisLayer(AMap: any, mode: '/road/'|'/divide/'|'/classify/') {
+export function getNewAnalysisLayer(AMap: any, mode: '/road/' | '/divide/' | '/classify/') {
     switch (mode) {
         case '/road/':
         case '/divide/':
@@ -27,10 +27,17 @@ export function getNewAnalysisLayer(AMap: any, mode: '/road/'|'/divide/'|'/class
                     const c = document.createElement('canvas');
                     c.height = c.width = 256;
                     const ctx = c.getContext('2d') as CanvasRenderingContext2D;
+                    ctx.fillStyle = 'rgb(0, 100, 255)';
 
-                    // c.src = await blockRequestHandler(x, y, z, mode); // 等待请求
-
-                    success(c); // 通知API切片创建完成
+                    const pos = await playgroundRequestHandler(x, y, z);
+                    if (pos) {
+                        ctx.beginPath();
+                        ctx.ellipse(pos[0], pos[1], 10, 10, 1, 0, 2 * Math.PI);
+                        ctx.fill();
+                        success(c);
+                    }else{
+                        fail();
+                    }
                 }
             })
         default:
