@@ -60,14 +60,14 @@ def classify(request:HttpRequest):
     if request.method == 'GET':
         return Http404()
 
-def devide(request:HttpRequest):
+def divide(request:HttpRequest):
     if request.method == 'POST':
         stamp = time.time()
 
-        temp_file = f"map/temp/{stamp}_devide.png"
+        temp_file = f"map/temp/{stamp}_divide.png"
         Image.open(request.FILES['img']).save(temp_file)
 
-        res = model.devide_model(temp_file)
+        res = model.divide_model(temp_file)
         os.system(f"rm -rf ./map/temp/{stamp}*")
         
         response = HttpResponse(content_type='image/png')

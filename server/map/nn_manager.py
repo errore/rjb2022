@@ -27,7 +27,7 @@ class ModelManager(Singleton):
 
         self.__bit = Predictor("../static_models/bitx1024", use_gpu=True)
         self.__road = Predictor("../static_models/roadx256",use_gpu=True) 
-        self.__devide = Predictor("../static_models/devidex256", use_gpu=True)
+        self.__divide = Predictor("../static_models/devidex256", use_gpu=True)
         self.__classify = Predictor("../static_models/classifyx1024", use_gpu=True)
 
         print(' Model Loaded '.center(50, '='))
@@ -44,8 +44,8 @@ class ModelManager(Singleton):
         out = (out>0.3).astype("uint8")
         return np.uint8(out*255)
 
-    def devide_model(self, image:str) -> np.ndarray:
-        label = self.__devide.predict(image)['label_map']
+    def divide_model(self, image:str) -> np.ndarray:
+        label = self.__divide.predict(image)['label_map']
         out = self.__lut[label]
         return out
 

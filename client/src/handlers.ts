@@ -1,4 +1,4 @@
-export async function blockClickHandler(x: number, y: number, z: number, cxt: CanvasRenderingContext2D) {
+export async function blockRequestHandler(x: number, y: number, z: number, request: string) {
     let url = 'https://webst02.is.autonavi.com/appmaptile?style=6&x=' + x + '&y=' + y + '&z=' + z;
 
     try {
@@ -8,14 +8,16 @@ export async function blockClickHandler(x: number, y: number, z: number, cxt: Ca
         let fromData = new FormData();
         fromData.append('img', blob); // to from data
 
-        const imgData = await fetch('/road/', { method: 'POST', body: fromData });
+        const imgData = await fetch(request, { method: 'POST', body: fromData });
         const rawImage = await imgData.blob(); // get analysis image
-        const img = document.createElement('img');
-        img.src = URL.createObjectURL(rawImage);
 
-        cxt.drawImage(img, 0, 0);
-
+        return URL.createObjectURL(rawImage)
     } catch (e) {
-        return console.error(e);
+        console.error(e);
+        return ''
     }
+}
+
+async function playgroundRequestHandler(x: number, y: number, z: number) {
+    
 }

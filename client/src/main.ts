@@ -1,12 +1,12 @@
 import { load } from "@amap/amap-jsapi-loader";
 import "@amap/amap-jsapi-types";
-import { blockClickHandler } from "./handlers";
+import { getNewAnalysisLayer } from "./AnalysisLayer";
 
 
 load({ //首次调用 load
-    key: '1c96d5a705a60c162735d89fcb7a644d',//首次load key为必填
-    version: '1.4.15',
-    plugins: ['AMap.Scale', 'AMap.ToolBar', 'AMap.DistrictLayer', 'AMap.RectangleEditor']
+    key: '1c96d5a705a60c162735d89fcb7a644d', // 首次load key为必填
+    version: '2.0', // 2.0 无法切片但性能更佳
+    plugins: ['AMap.Scale', 'AMap.ToolBar'] // 定义插件
 }).then((AMap) => {
     let map: AMap.Map = new AMap.Map('container', {
         center: [116.397428, 39.90923],
@@ -14,30 +14,20 @@ load({ //首次调用 load
         zoom: 14,
         zooms: [3, 15],
         expandZoomRange: true
-    });
+    }); // 定义地图参数
 
-    var layer: AMap.TileLayer = new AMap.TileLayer.Flexible({
-        cacheSize: 30,
-        zIndex: 500,
-        createTile: function (x: number, y: number, z: number, success: any, fail: any) {
-            var c = document.createElement('canvas');
-            c.width = c.height = 256;
-
-            var cxt = c.getContext("2d") as CanvasRenderingContext2D;
-            cxt.strokeStyle = "#FF0000";
-            cxt.strokeRect(0, 0, 256, 256);
-
-            c.addEventListener("click", () => blockClickHandler(x, y, z, cxt)); 
-            // 通知API切片创建完成
-            success(c);
-        }
-    });
-
+    const roadLayer:AMap.TileLayer = getNewAnalysisLayer(AMap, '/road/'); // 路网图层
+    const divideLayer:AMap.TileLayer = getNewAnalysisLayer(AMap, '/divide/'); // 分割图层
+    
     map.setLayers(
         [
             new AMap.TileLayer.Satellite(),
-            layer
-        ]);
+            roadLayer,
+            divideLayer
+        ]); // 设置图层
+
+    roadLayer.hide();
+    divideLayer.hide();
 
     map.addControl(new AMap.Scale());
     map.addControl(new AMap.ToolBar());
