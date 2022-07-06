@@ -1,3 +1,11 @@
+/**
+ * 处理图块生成请求
+ * @param x x
+ * @param y y
+ * @param z z
+ * @param request 请求地址
+ * @returns objectURL
+ */
 export async function blockRequestHandler(x: number, y: number, z: number, request: string) {
     const url = 'https://webst02.is.autonavi.com/appmaptile?style=6&x=' + x + '&y=' + y + '&z=' + z;
 
@@ -18,13 +26,20 @@ export async function blockRequestHandler(x: number, y: number, z: number, reque
     }
 }
 
+/**
+ * 处理物体位置识别标签
+ * @param x x
+ * @param y y
+ * @param z z
+ * @returns 标记位置
+ */
 export async function playgroundRequestHandler(x: number, y: number, z: number) {
     const url = 'https://webst02.is.autonavi.com/appmaptile?style=6&x=' + x + '&y=' + y + '&z=' + z;
 
     try {
         let response = await fetch(url, { method: 'GET' });
 
-        if(response.status !== 200){
+        if (response.status !== 200) {
             response = await fetch(url, { method: 'GET' }); // retry
         }
 
@@ -47,6 +62,11 @@ export async function playgroundRequestHandler(x: number, y: number, z: number) 
     }
 }
 
+/**
+ * 处理开关
+ * @param target 开关
+ * @param layer 图层
+ */
 export function switchHandler(target: HTMLInputElement, layer: AMap.TileLayer) {
     target.addEventListener('change', () => {
         if (target.checked) {
@@ -57,13 +77,54 @@ export function switchHandler(target: HTMLInputElement, layer: AMap.TileLayer) {
     });
 }
 
-export function opacityHandler(target: HTMLInputElement, layer:AMap.TileLayer, id:'road_opa_val'|'divide_opa_val'){
+/**
+ * 处理透明度
+ * @param target 滑条
+ * @param layer 图层
+ * @param id 标签id
+ */
+export function opacityHandler(target: HTMLInputElement, layer: AMap.TileLayer, id: 'road_opa_val' | 'divide_opa_val') {
 
-    function handler(){
+    function handler() {
         (document.getElementById(id) as HTMLSpanElement).innerText = target.value;
         layer.setOpacity(Number(target.value));
     }
 
-    target.addEventListener('input',handler);
+    target.addEventListener('input', handler);
     target.addEventListener('change', handler);
 }
+
+/**
+ * 处理UI图片传输
+ * @param img 图片
+ */
+export function imgDragHandler(img: HTMLImageElement, num: number) {
+    img.addEventListener('drop', (ev) => {
+        ev.preventDefault();
+
+        const fileList = ev.dataTransfer?.files as FileList;
+        if (fileList.length === 0) {
+            return false;
+        }
+        // 获取文件
+
+        if (fileList[0].type.indexOf('image') === -1) {
+            return false;
+        }
+        // 判断是否为图片
+
+        img.src = URL.createObjectURL(fileList[0]);
+    });
+    // 拖放事件
+    const input = document.getElementById('input_' + num) as HTMLInputElement;
+    img.addEventListener('click', () => {
+        input.click();
+    });
+    input.addEventListener('change', ()=>{
+        if (input.files) {
+            img.src = URL.createObjectURL(input.files[0]);
+        }
+    })
+    // 点击事件
+}
+

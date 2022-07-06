@@ -1,7 +1,64 @@
 import { load } from "@amap/amap-jsapi-loader";
 import "@amap/amap-jsapi-types";
 import { getNewAnalysisLayer } from "./AnalysisLayer";
-import { opacityHandler, switchHandler } from "./handlers";
+import { imgDragHandler, opacityHandler, switchHandler } from "./handlers";
+
+const model = document.getElementById('model');
+
+document.getElementById('bit')?.addEventListener('click', () => {
+    model?.setAttribute('class', 'model display-model');
+});
+
+document.getElementById('exit_bit')?.addEventListener('click', () => {
+    model?.setAttribute('class', 'model');
+});
+// 绑定bit界面
+
+const img_1 = document.getElementById('img_1') as HTMLImageElement;
+const img_2 = document.getElementById('img_2') as HTMLImageElement;
+
+img_1.addEventListener('dragover', (ev) => ev.preventDefault());
+img_2.addEventListener('dragover', (ev) => ev.preventDefault());
+
+imgDragHandler(img_1, 1);
+imgDragHandler(img_2, 2);
+// 绑定拖放点击
+
+const input_1 = document.getElementById('input_1') as HTMLInputElement;
+const input_2 = document.getElementById('input_2') as HTMLInputElement;
+
+const layer_0 = document.getElementById('bit_layer_0') as HTMLImageElement;
+const layer_1 = document.getElementById('bit_layer_1') as HTMLImageElement;
+const layer_2 = document.getElementById('bit_layer_2') as HTMLImageElement;
+
+
+document.getElementById('bit_send')?.addEventListener('click', async () => {
+    if (!(input_1.files && input_2.files)) return false;
+
+    try {
+        const t1 = input_1.files[0];
+        const t2 = input_2.files[0];
+
+        let formData = new FormData();
+        formData.append("t1", t1);
+        formData.append("t2", t2);
+
+        const response = await fetch('/bit/', { method: "POST", body: formData });
+        const blob = await response.blob();
+
+        layer_0.src = URL.createObjectURL(t1);
+        layer_1.src = URL.createObjectURL(t2);
+        layer_2.src = URL.createObjectURL(blob);
+
+        layer_1.setAttribute('class', 'bit-layer bit-animate');
+        layer_1.setAttribute('class', 'bit-layer bit-animate');
+    } catch (e) {
+        return false
+    }
+});
+// 绑定BIT按钮
+
+
 
 load({ //首次调用 load
     key: '1c96d5a705a60c162735d89fcb7a644d', // 首次load key为必填
@@ -53,16 +110,6 @@ load({ //首次调用 load
 
     roadLayer.setOpacity(0.6);
     divideLayer.setOpacity(0.6);
-
-    const model = document.getElementById('model') as HTMLElement;
-
-    document.getElementById('bit')?.addEventListener('click', () => {
-        model.setAttribute('class', 'model display-model');
-    });
-
-    document.getElementById('exit_bit')?.addEventListener('click', ()=>{
-        model.setAttribute('class', 'model');
-    });
 
 }).catch((e) => {
     console.error(e);

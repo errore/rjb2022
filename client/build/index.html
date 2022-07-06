@@ -11,41 +11,62 @@
     <div id="container" tabindex="0"></div>
 
     <div class="input-card" style="width: 250px">
-      <div style="margin: auto;font-size: x-large;margin-top: 12px;margin-bottom: 24px;">
-        <div><b style="color: #2196F3">Geo</b>Analysis</div>
+      <div
+        style="
+          margin: auto;
+          font-size: x-large;
+          margin-top: 12px;
+          margin-bottom: 24px;
+        "
+      >
+        <div><b style="color: #2196f3">Geo</b>Analysis</div>
         <div><b>地理数据</b>分析</div>
       </div>
-      
+
       <div class="switch-item" style="margin-bottom: 12px">
         <div>路网分析</div>
         <label class="switch">
-          <input type="checkbox" id="road_switch">
+          <input type="checkbox" id="road_switch" />
           <div class="slider"></div>
         </label>
       </div>
 
-      <div class="slider-item"  style="margin-bottom: 12px">
+      <div class="slider-item" style="margin-bottom: 12px">
         <label>透明度：</label><span id="road_opa_val"> - </span>
-        <input id="road_opacity" type="range" value="0.6" min="0" max="1" step="0.01">
+        <input
+          id="road_opacity"
+          type="range"
+          value="0.6"
+          min="0"
+          max="1"
+          step="0.01"
+        />
       </div>
 
       <div class="switch-item" style="margin-bottom: 12px">
         <div>图像分割</div>
         <label class="switch">
-          <input type="checkbox" id="divide_switch">
+          <input type="checkbox" id="divide_switch" />
           <div class="slider"></div>
         </label>
       </div>
 
-      <div class="slider-item"  style="margin-bottom: 12px">
+      <div class="slider-item" style="margin-bottom: 12px">
         <label>透明度：</label><span id="divide_opa_val"> - </span>
-        <input id="divide_opacity" type="range" value="0.6" min="0" max="1" step="0.01">
+        <input
+          id="divide_opacity"
+          type="range"
+          value="0.6"
+          min="0"
+          max="1"
+          step="0.01"
+        />
       </div>
 
       <div class="switch-item" style="margin-bottom: 12px">
         <div>物体识别</div>
         <label class="switch">
-          <input type="checkbox" id="classify_switch">
+          <input type="checkbox" id="classify_switch" />
           <div class="slider"></div>
         </label>
       </div>
@@ -53,10 +74,48 @@
       <button id="bit" class="btn" style="margin-bottom: 12px">时相分析</button>
     </div>
 
-    <div class="model" id="model">
+    <div class="model display-model" id="model">
       <div class="model-content">
-          <button class="btn exit-btn" id="exit_bit"> 退出 </button>
-
+        <button class="btn exit-btn" id="exit_bit">退出</button>
+        <div
+          style="
+            margin: auto;
+            font-size: x-large;
+            margin-top: 12px;
+            margin-bottom: 24px;
+            margin-left: 18px;
+          "
+        >
+          <div><b style="color: #2196f3">时间相位</b>分析</div>
+        </div>
+        <div class="bit-content">
+          <div class="input-line">
+            <b style="position: absolute; left: 50%">第一时相(t1)</b>
+            <b style="position: absolute; left: 50%; bottom: 0">第二时相(t2)</b>
+          </div>
+          <div class="output-line">
+            <button class="btn" id="bit_send">一键分析</button>
+          </div>
+          <div class="bit-layout">
+            <div class="bit input-area">
+              <div class="img-text">将图片拖入此处</div>
+              <div class="input-content"><img class="input-img" id="img_1" draggable="true"/></div>
+              <input type="file" id="input_1" style="visibility: hidden;">
+            </div>
+            <div class="bit input-area">
+              <div class="img-text">将图片拖入此处</div>
+              <div class="input-content"><img class="input-img" id="img_2" draggable="true"/></div>
+              <input type="file" id="input_2" style="visibility: hidden;">
+            </div>
+          </div>
+          <div class="bit-layout">
+            <div class="bit">
+              <img id="bit_layer_0" class="bit-bg"/>
+              <img id="bit_layer_1" class="bit-layer"/>
+              <img id="bit_layer_2" class="bit-layer"/>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <script src="main-bundle.js"></script>
