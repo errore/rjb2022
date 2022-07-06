@@ -34,10 +34,8 @@ export function getNewAnalysisLayer(AMap: any, mode: '/road/' | '/divide/' | '/c
                         ctx.beginPath();
                         ctx.ellipse(pos[0], pos[1], 10, 10, 1, 0, 2 * Math.PI);
                         ctx.fill();
-                        success(c);
-                    }else{
-                        fail();
                     }
+                    success(c);
                 }
             })
         default:

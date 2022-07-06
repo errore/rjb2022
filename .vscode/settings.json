@@ -4,5 +4,8 @@
         "bbox",
         "jsapi",
         "lnglat"
+    ],
+    "python.analysis.extraPaths": [
+        "./PaddleRS"
     ]
 }

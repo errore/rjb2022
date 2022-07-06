@@ -22,7 +22,12 @@ export async function playgroundRequestHandler(x: number, y: number, z: number) 
     const url = 'https://webst02.is.autonavi.com/appmaptile?style=6&x=' + x + '&y=' + y + '&z=' + z;
 
     try {
-        const response = await fetch(url, { method: 'GET' });
+        let response = await fetch(url, { method: 'GET' });
+
+        if(response.status !== 200){
+            response = await fetch(url, { method: 'GET' }); // retry
+        }
+
         const blob = await response.blob(); // 从api获取地图
 
         const fromData = new FormData();
@@ -31,10 +36,11 @@ export async function playgroundRequestHandler(x: number, y: number, z: number) 
         const data = await fetch('/classify/', { method: 'POST', body: fromData });
         const json = await data.json(); // 转换为json object
 
-        if (json.score > 0.5) return null;
-
-        const boundingBox: number[] = json.bbox;
-        return [(boundingBox[0] + boundingBox[2]) / 2, (boundingBox[1] + boundingBox[3]) / 2];
+        if (Number(json.score) < 0.4) return null;
+        else {
+            const boundingBox: number[] = json.bbox;
+            return [boundingBox[0] + boundingBox[2] / 2, boundingBox[1] + boundingBox[3] / 2];
+        }
     } catch (e) {
         console.error(e);
         return null;

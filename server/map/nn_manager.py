@@ -28,7 +28,7 @@ class ModelManager(Singleton):
         self.__bit = Predictor("../static_models/bitx1024", use_gpu=True)
         self.__road = Predictor("../static_models/roadx256",use_gpu=True) 
         self.__divide = Predictor("../static_models/devidex256", use_gpu=True)
-        self.__classify = Predictor("../static_models/classifyx1024", use_gpu=True)
+        self.__classify = Predictor("../static_models/classifyx256", use_gpu=True)
 
         print(' Model Loaded '.center(50, '='))
 
@@ -39,16 +39,27 @@ class ModelManager(Singleton):
         return np.uint8(out*255)
 
     def road_model(self, image:str) -> np.ndarray:
-        out = self.__road.predict(image)
+        try:
+            out = self.__road.predict(image)
+        except:
+            return np.zeros((256,256),'uint8')
+
         out = out['score_map'].transpose((2,0,1))[1]
         out = (out>0.3).astype("uint8")
         return np.uint8(out*255)
 
     def divide_model(self, image:str) -> np.ndarray:
-        label = self.__divide.predict(image)['label_map']
+        try:
+            label = self.__divide.predict(image)['label_map']
+        except:
+            return np.zeros((256,256),'uint8')
         out = self.__lut[label]
         return out
 
     def classify_model(self, image:str) -> str:
-        out = self.__classify.predict(image)[0]
+        try:
+            out = self.__classify.predict(image)[0]
+        except:
+            return "{\"score\":0,\"bbox\":[]}"
+        
         return out
