@@ -308,11 +308,18 @@ input:checked+.slider:before {
     opacity: 0;
 }
 
-.bit-layer{
+.bit-layer-1{
     position: absolute;
     width: 256px;
     height: 256px;
     margin-left: -256px;
+}
+
+.bit-layer-2{
+    position: absolute;
+    width: 256px;
+    height: 256px;
+    margin-top: -256px;
 }
 
 .bit-layer:not([src]){
