@@ -35,6 +35,8 @@ const layer_2 = document.getElementById('bit_layer_2') as HTMLImageElement;
 document.getElementById('bit_send')?.addEventListener('click', async () => {
     if (!(input_1.files && input_2.files)) return false;
 
+    if(input_1.files.length === 0 || input_2.files.length === 0) return false;
+    
     try {
         const t1 = input_1.files[0];
         const t2 = input_2.files[0];
@@ -44,10 +46,11 @@ document.getElementById('bit_send')?.addEventListener('click', async () => {
         formData.append("t2", t2);
 
         const response = await fetch('/bit/', { method: "POST", body: formData });
+        if(response.status === 500) return false;
         const blob = await response.blob();
 
-        layer_0.src = URL.createObjectURL(t1);
-        layer_1.src = URL.createObjectURL(t2);
+        layer_0.src = img_1.src;
+        layer_1.src = img_2.src;
         layer_2.src = URL.createObjectURL(blob);
 
         layer_1.setAttribute('class', 'bit-layer bit-animate');

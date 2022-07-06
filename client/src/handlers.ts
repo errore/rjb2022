@@ -99,6 +99,7 @@ export function opacityHandler(target: HTMLInputElement, layer: AMap.TileLayer, 
  * @param img 图片
  */
 export function imgDragHandler(img: HTMLImageElement, num: number) {
+    const input = document.getElementById('input_' + num) as HTMLInputElement;
     img.addEventListener('drop', (ev) => {
         ev.preventDefault();
 
@@ -114,9 +115,12 @@ export function imgDragHandler(img: HTMLImageElement, num: number) {
         // 判断是否为图片
 
         img.src = URL.createObjectURL(fileList[0]);
+        if (input.files) {
+            input.files[0] = fileList[0];
+        }
     });
     // 拖放事件
-    const input = document.getElementById('input_' + num) as HTMLInputElement;
+    
     img.addEventListener('click', () => {
         input.click();
     });
