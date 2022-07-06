@@ -27,6 +27,7 @@ $ python ./manage.py run
 
 ## 开发环境自动编译TS
 ```
-npm run wpw
+$ cd ./client
+$ npm run wpw
 ```
 需要vscode live server插件
