@@ -17,11 +17,14 @@ document.getElementById('exit_bit')?.addEventListener('click', () => {
 const img_1 = document.getElementById('img_1') as HTMLImageElement;
 const img_2 = document.getElementById('img_2') as HTMLImageElement;
 
+let file1 = new File([],'t1');
+let file2 = new File([], 't2');
+
 img_1.addEventListener('dragover', (ev) => ev.preventDefault());
 img_2.addEventListener('dragover', (ev) => ev.preventDefault());
 
-imgDragHandler(img_1, 1);
-imgDragHandler(img_2, 2);
+imgDragHandler(img_1, 1, file1);
+imgDragHandler(img_2, 2, file2);
 // 绑定拖放点击
 
 const input_1 = document.getElementById('input_1') as HTMLInputElement;
@@ -32,12 +35,13 @@ const layer_1 = document.getElementById('bit_layer_1') as HTMLImageElement;
 const layer_2 = document.getElementById('bit_layer_2') as HTMLImageElement;
 
 
+
 document.getElementById('bit_send')?.addEventListener('click', async () => {
     if (!(input_1.files && input_2.files)) return false;
 
     try {
-        const t1 = input_1.files[0];
-        const t2 = input_2.files[0];
+        const t1 = file1;
+        const t2 = file2;
 
         let formData = new FormData();
         formData.append("t1", t1);
