@@ -17,14 +17,14 @@ document.getElementById('exit_bit')?.addEventListener('click', () => {
 const img_1 = document.getElementById('img_1') as HTMLImageElement;
 const img_2 = document.getElementById('img_2') as HTMLImageElement;
 
-let file1 = new File([],'t1');
+let file1 = new File([], 't1');
 let file2 = new File([], 't2');
 
 img_1.addEventListener('dragover', (ev) => ev.preventDefault());
 img_2.addEventListener('dragover', (ev) => ev.preventDefault());
 
-imgDragHandler(img_1, 1, file1);
-imgDragHandler(img_2, 2, file2);
+imgDragHandler(img_1, 1, (file: File)=> file1 = file);
+imgDragHandler(img_2, 2, (file: File)=> file2 = file);
 // 绑定拖放点击
 
 const input_1 = document.getElementById('input_1') as HTMLInputElement;
@@ -37,10 +37,7 @@ const layer_2 = document.getElementById('bit_layer_2') as HTMLImageElement;
 
 
 document.getElementById('bit_send')?.addEventListener('click', async () => {
-    if (!(input_1.files && input_2.files)) return false;
 
-    if(input_1.files.length === 0 || input_2.files.length === 0) return false;
-    
     try {
         const t1 = file1;
         const t2 = file2;
@@ -64,8 +61,6 @@ document.getElementById('bit_send')?.addEventListener('click', async () => {
     }
 });
 // 绑定BIT按钮
-
-
 
 load({ //首次调用 load
     key: '1c96d5a705a60c162735d89fcb7a644d', // 首次load key为必填

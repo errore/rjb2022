@@ -261,14 +261,14 @@ input:checked+.slider:before {
 
 .bit{
     background-color: white;
-    border-radius: 0.4rem;
-    border: 3px dashed #2196F3;
     margin: auto;
 }
 
 .input-area {
     width: 180px;
     height: 180px;
+    border-radius: 0.4rem;
+    border: 3px dashed #2196F3;
 }
 
 .input-content{
@@ -300,26 +300,29 @@ input:checked+.slider:before {
 }
 
 .bit-bg{
-    width: 256px;
-    height: 256px;
-}
-
-.bit-bg:not([src]){
-    opacity: 0;
-}
-
-.bit-layer-1{
     position: absolute;
     width: 256px;
     height: 256px;
-    margin-left: -256px;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0.4rem;
+    border: 3px dashed #2196F3;
+    background-color: white;
 }
 
-.bit-layer-2{
+.bit-layer{
     position: absolute;
     width: 256px;
     height: 256px;
-    margin-top: -256px;
+    opacity: 0.4;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .bit-layer:not([src]){
@@ -331,6 +334,25 @@ input:checked+.slider:before {
     left: 16px;
     bottom: 16px;
     z-index: 10;
+}
+
+#bit_layer_2{
+    position: absolute;
+    width: 256px;
+    height: 256px;
+    opacity: 0.4;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.output{
+    border-radius: 0.4rem;
+    border: 3px dashed #2196F3;
+    width: 256px;
+    height: 256px;
 }
 
 .bit-animate{

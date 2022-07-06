@@ -51,7 +51,7 @@ export async function playgroundRequestHandler(x: number, y: number, z: number) 
         const data = await fetch('/classify/', { method: 'POST', body: fromData });
         const json = await data.json(); // 转换为json object
 
-        if (Number(json.score) < 0.4) return null;
+        if (Number(json.score) < 0.1) return null;
         else {
             const boundingBox: number[] = json.bbox;
             return [boundingBox[0] + boundingBox[2] / 2, boundingBox[1] + boundingBox[3] / 2];
@@ -98,7 +98,7 @@ export function opacityHandler(target: HTMLInputElement, layer: AMap.TileLayer, 
  * 处理UI图片传输
  * @param img 图片
  */
-export function imgDragHandler(img: HTMLImageElement, num: number, file: File) {
+export function imgDragHandler(img: HTMLImageElement, num: number, file: any) {
     const input = document.getElementById('input_' + num) as HTMLInputElement;
     img.addEventListener('drop', (ev) => {
         ev.preventDefault();
@@ -115,7 +115,7 @@ export function imgDragHandler(img: HTMLImageElement, num: number, file: File) {
         // 判断是否为图片
 
         img.src = URL.createObjectURL(fileList[0]);
-        file = fileList[0];
+        file(fileList[0]);
     });
     // 拖放事件
     
@@ -125,6 +125,7 @@ export function imgDragHandler(img: HTMLImageElement, num: number, file: File) {
     input.addEventListener('change', ()=>{
         if (input.files) {
             img.src = URL.createObjectURL(input.files[0]);
+            file(input.files[0]);
         }
     })
     // 点击事件
