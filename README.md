@@ -19,7 +19,7 @@
 
 ```
 $ cd ./server
-$ python ./manage.py run
+$ python ./manage.py runserver
 ```
 如果顺利，前端网址在 http://127.0.0.1:8000/static/index.html 已打开 
 
